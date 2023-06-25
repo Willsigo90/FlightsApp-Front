@@ -66,6 +66,7 @@ export class FlightSearchComponent implements OnInit {
     this.apiService.getJourney(origin, destination).subscribe(
       (response) => {
         this.journeyResponse = response;
+        console.log(this.journeyResponse)
       },
       (error) => {
       }
