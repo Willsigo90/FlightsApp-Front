@@ -4,6 +4,7 @@ import { JourneyService } from 'src/app/services/journey.service';
 import { ApiService } from 'src/app/services/api.service';
 import { Journey } from '../../models/journey';
 import { StateService } from 'src/app/services/state.service';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -59,39 +60,18 @@ export class FlightSearchComponent implements OnInit {
   }
 
   async consumeService() {
-    const origin = this.originControl.value;
-    const destination = this.destinationControl.value;
-    const currency = this.currencyControl.value;
-
-    this.apiService.getJourney(origin, destination).subscribe(
-      (response) => {
-        this.journeyResponse = response;
-        console.log(this.journeyResponse)
-      },
-      (error) => {
-      }
-    );
-    
-    this.apiService.getCurrency(currency).subscribe(
-      (response) => {
-        this.currencyResponse = response;
-      },
-      (error) => {
-      }
-    );
-
-  }
-
-  onChangeCurrency(lang: any) {
-    console.log(lang.value);
-    this.apiService.getCurrency(lang.value).subscribe(
-      (response) => {
-        this.currencyResponse = response;
-        
-      },
-      (error) => {
-      }
-    );
+    try {
+      const origin = this.originControl.value;
+      const destination = this.destinationControl.value;
+      const currency = this.currencyControl.value;
+  
+      this.journeyResponse = await firstValueFrom(this.apiService.getJourney(origin, destination));
+      console.log(this.journeyResponse);
+  
+      this.currencyResponse = await firstValueFrom(this.apiService.getCurrency(currency));
+    } catch (error) {
+      // Manejo de errores 
+    }
   }
 
   updateState(newState: string) {

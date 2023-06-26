@@ -11,6 +11,7 @@ import { FlightSearchComponent } from './components/flight-search/flight-search.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { StateService } from 'src/app/services/state.service';
 import { FooterComponent } from './components/footer/footer.component';
+import { JourneyComponent } from './components/journey/journey.component';
 
 const apiConfig: ApiConfig = {
   apiUrl: 'https://localhost:7210'
@@ -21,7 +22,8 @@ const apiConfig: ApiConfig = {
   declarations: [
     AppComponent,
     FlightSearchComponent,
-    FooterComponent
+    FooterComponent,
+    JourneyComponent
   ],
   imports: [
     BrowserModule,
